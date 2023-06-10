@@ -6,31 +6,32 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
-    ./hardware-configuration.nix
+    [
+      # Include the results of the hardware scan.
+      ./hardware-configuration.nix
       ./user.nix
       ./mounts.nix
       ./gaming.nix
     ];
 
-# Bootloader.
+  # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "navi"; # Define your hostname.
-# networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
-# Configure network proxy if necessary
-# networking.proxy.default = "http://user:password@proxy:port/";
-# networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+  # Configure network proxy if necessary
+  # networking.proxy.default = "http://user:password@proxy:port/";
+  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-# Enable networking
-    networking.networkmanager.enable = true;
+  # Enable networking
+  networking.networkmanager.enable = true;
 
-# Set your time zone.
+  # Set your time zone.
   time.timeZone = "America/Los_Angeles";
 
-# Select internationalisation properties.
+  # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
   i18n.extraLocaleSettings = {
@@ -45,64 +46,64 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-# Configure keymap in X11
+  # Configure keymap in X11
   services.xserver = {
     layout = "us";
     xkbVariant = "";
   };
 
-# gimme that nix command goodness
+  # gimme that nix command goodness
   nix.extraOptions = ''
     experimental-features = nix-command flakes
-    '';
+  '';
 
-# Define a user account. Don't forget to set a password with ‘passwd’.
+  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.sky = {
     isNormalUser = true;
     description = "sky";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [];
+    packages = with pkgs; [ ];
     shell = pkgs.zsh;
   };
 
-# Allow unfree packages
+  # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-# List packages installed in system profile. To search, run:
-# $ nix search wget
-# AMD Stuff
+  # List packages installed in system profile. To search, run:
+  # $ nix search wget
+  # AMD Stuff
   hardware.opengl = {
     enable = true;
     driSupport = true;
     extraPackages = with pkgs; [
-# Leaving this here just in case
+      # Leaving this here just in case
     ];
-# enable 32-bit graphics support because Steam 
+    # enable 32-bit graphics support because Steam 
     driSupport32Bit = true;
-  };  
+  };
 
-# Audio stuff
+  # Audio stuff
   hardware = {
-# disable PulseAudio bc PipeWire is better
+    # disable PulseAudio bc PipeWire is better
     pulseaudio.enable = false;
-# enable bluetooth
+    # enable bluetooth
     bluetooth.enable = true;
-# Enable scanner support because that's not included ???
+    # Enable scanner support because that's not included ???
     sane.enable = true;
   };
-# enable audio with pipewire
+  # enable audio with pipewire
   services.pipewire = {
     enable = true;
-# compatibility with other audio api's
+    # compatibility with other audio api's
     alsa.enable = true;
     pulse.enable = true;
     jack.enable = true;
-# enable 32-bit because wine
+    # enable 32-bit because wine
     alsa.support32Bit = true;
   };
-# rtkit is optional but recommended for PipeWire
+  # rtkit is optional but recommended for PipeWire
   security.rtkit.enable = true;
-# bluetooth stuff for pipewire
+  # bluetooth stuff for pipewire
   environment.etc = {
     "wireplumber/bluetooth.lua.d/51-bluez-config.lua".text = ''
       bluez_monitor.properties = {
@@ -115,33 +116,33 @@
   };
 
 
-# KDE as backup 
+  # KDE as backup 
   services.xserver.enable = true;
-# Some programs need SUID wrappers, can be configured further or are
-# started in user sessions.
-# programs.mtr.enable = true;
-# programs.gnupg.agent = {
-#   enable = true;
-#   enableSSHSupport = true;
-# };
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  # programs.mtr.enable = true;
+  # programs.gnupg.agent = {
+  #   enable = true;
+  #   enableSSHSupport = true;
+  # };
 
-# List services that you want to enable:
+  # List services that you want to enable:
 
-# Enable the OpenSSH daemon.
-# services.openssh.enable = true;
+  # Enable the OpenSSH daemon.
+  # services.openssh.enable = true;
 
-# Open ports in the firewall.
-# networking.firewall.allowedTCPPorts = [ ... ];
-# networking.firewall.allowedUDPPorts = [ ... ];
-# Or disable the firewall altogether.
-# networking.firewall.enable = false;
+  # Open ports in the firewall.
+  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedUDPPorts = [ ... ];
+  # Or disable the firewall altogether.
+  # networking.firewall.enable = false;
 
-# This value determines the NixOS release from which the default
-# settings for stateful data, like file locations and database versions
-# on your system were taken. It‘s perfectly fine and recommended to leave
-# this value at the release version of the first install of this system.
-# Before changing this value read the documentation for this option
-# (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  # This value determines the NixOS release from which the default
+  # settings for stateful data, like file locations and database versions
+  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # this value at the release version of the first install of this system.
+  # Before changing this value read the documentation for this option
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
 
 }

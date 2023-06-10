@@ -39,31 +39,32 @@
     fontpreview
     nerdfonts
     cargo
+    nixpkgs-fmt
   ];
 
   nixpkgs.overlays = [
     (self: super: {
-     waybar = super.waybar.overrideAttrs (oldAttrs: {
-         mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-         });
-     })
+      waybar = super.waybar.overrideAttrs (oldAttrs: {
+        mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+      });
+    })
   ];
   nixpkgs.config.packageOverrides = pkgs: {
     catppuccin-gtk = pkgs.catppuccin-gtk.override {
       accents = [ "green" ]; # You can specify multiple accents here to output multiple themes 
-        size = "compact";
+      size = "compact";
       tweaks = [ "rimless" "black" ]; # You can also specify multiple tweaks here
-        variant = "mocha";
+      variant = "mocha";
     };
   };
 
 
-    services.xserver = {
+  services.xserver = {
     enable = true;
     desktopManager = {
       xfce.enable = true;
-      };
     };
+  };
 
   programs.zsh = {
     enable = true;
