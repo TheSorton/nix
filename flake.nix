@@ -1,5 +1,5 @@
 {
-  description = "meow meow meow meow";
+  description = "nix";
   inputs = {
     # the most important flake in nixos
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";

@@ -115,9 +115,14 @@
     '';
   };
 
-
+  environment.pathsToLink = [
+    "/share"
+  ];
   # KDE as backup 
-  services.xserver.enable = true;
+  services.xserver = {
+    enable = true;
+    displayManager.lightdm.enable = false;
+  };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;

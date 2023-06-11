@@ -1,7 +1,6 @@
 { config, pkgs, ... }:
 
 {
-
   environment.systemPackages = with pkgs; [
     neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
@@ -17,7 +16,6 @@
     wl-clipboard
     gcc
     nodejs
-    hyprpaper
     jq
     neofetch
     htop
@@ -42,6 +40,12 @@
     nixpkgs-fmt
   ];
 
+  services.openssh = {
+    enable = true;
+    # require public key authentication for better security
+    settings.PasswordAuthentication = true;
+    #permitRootLogin = "yes";
+  };
   nixpkgs.overlays = [
     (self: super: {
       waybar = super.waybar.overrideAttrs (oldAttrs: {
@@ -59,18 +63,11 @@
   };
 
 
-  services.xserver = {
-    enable = true;
-    desktopManager = {
-      xfce.enable = true;
-    };
-  };
-
   programs.zsh = {
     enable = true;
     shellAliases = {
       ll = "ls -l";
-      update = "sudo nixos-rebuild switch --flake ~/.config/nix/flakes/";
+      update = "sudo nixos-rebuild switch --flake ~/.config/nix/flakes/ --impure";
       update-flake = "nix flake update";
       vim = "nvim";
     };
@@ -78,7 +75,6 @@
     histSize = 10000;
   };
   environment.localBinInPath = true;
-
   services.flatpak.enable = true;
   environment.binsh = "${pkgs.zsh}/bin/zsh";
   security.polkit.enable = true;
