@@ -38,6 +38,9 @@
     nerdfonts
     cargo
     nixpkgs-fmt
+    nitch
+    nim
+    revolt-desktop
   ];
 
   services.openssh = {
