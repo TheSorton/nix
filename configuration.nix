@@ -17,6 +17,7 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot.configurationLimit = 8;
 
   networking.hostName = "navi"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -27,6 +28,7 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+  networking.nameservers = [ "9.9.9.9" "1.1.1.1" ];
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
@@ -52,7 +54,7 @@
     xkbVariant = "";
   };
 
-  # gimme that nix command goodness
+  # Enable flakes 
   nix.extraOptions = ''
     experimental-features = nix-command flakes
   '';
@@ -119,7 +121,8 @@
   environment.pathsToLink = [
     "/share"
   ];
-  # KDE as backup 
+
+  # Remove Lightdm
   services.xserver = {
     enable = true;
     displayManager.lightdm.enable = false;

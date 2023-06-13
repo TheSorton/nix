@@ -2,45 +2,48 @@
 
 {
   environment.systemPackages = with pkgs; [
-    neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
-    wayland
-    firefox
-    git
-    kitty
-    discord
-    meson
-    wofi
-    slurp
-    grim
-    wl-clipboard
-    gcc
-    nodejs
-    jq
-    neofetch
-    htop
-    steamcmd
-    cider
-    waybar
-    pavucontrol
-    pamixer
-    xwayland
-    unzip
-    pcmanfm
-    p7zip
-    nestopia
-    catppuccin-gtk
-    dunst
-    glib
-    rofi
-    pywal
-    fontpreview
-    nerdfonts
+    busybox
     cargo
-    nixpkgs-fmt
-    nitch
+    catppuccin-gtk
+    cider
+    discord-canary
+    dunst
+    firefox
+    fontpreview
+    gcc
+    git
+    glib
+    grim
+    htop
+    hyprpaper
+    jq
+    kitty
+    meson
+    neofetch
+    neovim
+    nerdfonts
+    nestopia
     nim
+    nitch
+    nixpkgs-fmt
+    nodejs
+    p7zip
+    pamixer
+    pavucontrol
+    pcmanfm
+    pywal
     revolt-desktop
+    rofi
+    slurp
+    steamcmd
+    unzip
+    waybar
+    wayland
+    wget
+    wl-clipboard
+    wofi
+    xwayland
+    zip
   ];
 
   services.openssh = {
@@ -70,7 +73,7 @@
     enable = true;
     shellAliases = {
       ll = "ls -l";
-      update = "sudo nixos-rebuild switch --flake ~/.config/nix/flakes/ --impure";
+      update = "sudo nixos-rebuild switch --flake ~/git/nix --impure";
       update-flake = "nix flake update";
       vim = "nvim";
     };
